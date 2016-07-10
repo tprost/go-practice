@@ -1,4 +1,4 @@
-package bubble_sort
+package sorting_algorithms
 
 import "sort"
 
