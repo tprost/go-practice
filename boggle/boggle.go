@@ -11,12 +11,27 @@ type Letter byte
 type Board [5][5]Letter
 type Word []Letter
 
+func (board Board) String() string {
+	str := ""
+	for y := 0; y < 5; y++ {
+		for x := 0; x < 5; x++ {
+			str = str + string(board[x][y])
+		}
+		str = str + "\n"
+	}
+	return str
+}
+
 // func NewWord(letters []*Letter) *Word {
 
 // }
 
 func (word Word) String() string {
-	return string([]byte(word))
+	str := ""
+	for _, letter := range word {
+		str = str + string(letter)
+	}
+	return str
 }
 
 func (board *Board) ReadLetter(position Position) (Letter, error) {
@@ -32,7 +47,7 @@ func (board *Board) ReadWord(start Position, end Position) (Word, error) {
 		return nil, errors.New("positions are equal")
 	}
 
-	if (start.X > end.X) {
+	if (start.X > end.X && start.Y == end.Y) {
 		for i := start.X; i >= end.X; i-- {
 			letter, error := board.ReadLetter(Position{i, start.Y})
 			if (error != nil) {
@@ -40,7 +55,7 @@ func (board *Board) ReadWord(start Position, end Position) (Word, error) {
 			}
 			word = append(word, letter)
 		}
-	} else {
+	} else if (start.X < end.X && start.Y == end.Y) {
 		for i := start.X; i <= end.X; i++ {
 			letter, error := board.ReadLetter(Position{i, start.Y})
 			if (error != nil) {
@@ -48,8 +63,7 @@ func (board *Board) ReadWord(start Position, end Position) (Word, error) {
 			}
 			word = append(word, letter)
 		}
-	}
-	if (start.Y > end.Y) {
+	} else if (start.Y > end.Y && start.X == end.X) {
 		for i := start.Y; i >= end.Y; i-- {
 			letter, error := board.ReadLetter(Position{start.X, i})
 			if (error != nil) {
@@ -57,7 +71,7 @@ func (board *Board) ReadWord(start Position, end Position) (Word, error) {
 			}
 			word = append(word, letter)
 		}
-	} else {
+	} else if (start.Y < end.Y && start.X == end.X) {
 		for i := start.Y; i <= end.Y; i++ {
 			letter, error := board.ReadLetter(Position{start.X, i})
 			if (error != nil) {
@@ -65,6 +79,8 @@ func (board *Board) ReadWord(start Position, end Position) (Word, error) {
 			}
 			word = append(word, letter)
 		}
+	} else {
+		return nil, errors.New("cannot read word based on those positions")
 	}
 	return word, nil
 }

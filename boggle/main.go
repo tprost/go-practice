@@ -9,7 +9,7 @@ func ReadBoard(file *os.File) (*Board, error) {
 
 	// for each line
 	reader := bufio.NewReader(file)
-	for i := 0; i < len(board); i++ {
+	for y := 0; y < len(board[0]); y++ {
 		// read a row of letters
 		line, _, error := reader.ReadLine()
 		// throw errors if there are errors
@@ -17,8 +17,8 @@ func ReadBoard(file *os.File) (*Board, error) {
 			return &board, nil
 		}
 		// set a row of the board
-		for j := 0; j < len(board[0]); j++ {
-			board[i][j] = Letter(line[j])
+		for x := 0; x < len(board); x++ {
+			board[x][y] = Letter(line[x])
 		}
 	}
 

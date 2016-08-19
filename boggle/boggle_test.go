@@ -24,6 +24,6 @@ func TestReadWord(t *testing.T) {
 	board, error := ReadBoard(file)
 	word, error := board.ReadWord(Position{0, 0}, Position{2, 0});
 	if (word.String() != "bag") {
-		t.Error("the first three letters should be `bag`")
+		t.Error("the first three letters should be `bag` but we got " + word.String())
 	}
 }
