@@ -2,6 +2,11 @@ package boggle
 
 import "errors"
 
+type Boggle struct {
+	Board Board
+	WordList WordList
+}
+
 type Position struct {
 	X int
 	Y int
@@ -10,6 +15,15 @@ type Position struct {
 type Letter byte
 type Board [5][5]Letter
 type Word []Letter
+
+func NewWord(wordString string) Word {
+
+	var word Word
+	for i := 0; i < len(wordString); i++ {
+		word = append(word, Letter(wordString[i]))
+	}
+	return word
+}
 
 func (board Board) String() string {
 	str := ""

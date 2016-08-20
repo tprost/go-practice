@@ -26,29 +26,35 @@ func ReadBoard(file *os.File) (*Board, error) {
 	return &board, nil
 }
 
-// func (board *Board) FindWords(wordList *WordList) []string {
+func (board *Board) FindWords(wordList *WordList) *WordList {
 
-// 	width := len(board[0])
-// 	height := len(board)
+	words := NewWordList();
 
-// 	// for each starting position
-// 	for i := 0; i < height; i++ {
-// 		for j := 0; j < width; j++ {
+	width := len(board)
+	height := len(board[0])
 
+	// for each starting position
+	for x := 0; x < height; x++ {
+		for y := 0; y < width; y++ {
 
-// 			// horizontal words ltr
-// 			for end := j + 1; end < width; end++ {
+			start := Position{x, y}
 
-// 			}
+			// horizontal words ltr
+			for end := x + 1; end < width; end++ {
+				word, _ := board.ReadWord(start, Position{end, y})
+				if (wordList.HasWord(word)) {
+					words.AddWord(word);
+				}
+			}
 
-// 			// horizontal words rtl
-// 			for end := j - 1; end >= 0; end-- {
+			// horizontal words rtl
+			for end := y - 1; end >= 0; end-- {
 
-// 			}
-// 			// vertical words
+			}
+			// vertical words
 
+		}
+	}
 
-// 			board[i][j] = line[j]
-// 		}
-// 	}
-// }
+	return words
+}
