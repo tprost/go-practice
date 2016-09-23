@@ -16,3 +16,17 @@ func TestInOrder(t *testing.T) {
 		}
 	}
 }
+
+func TestFind(t *testing.T) {
+	tree := NewTree(5)
+	tree.Insert(3)
+	tree.Insert(8)
+	tree.Insert(1)
+	tree.Insert(2)
+	if tree.Find(4) {
+		t.Error("found 4 but it is not there")
+	}
+	if !tree.Find(8) {
+		t.Error("should have found 8")
+	}
+}

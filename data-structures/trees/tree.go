@@ -40,3 +40,16 @@ func (tree *Tree) InOrder() []int {
 	}
 	return order
 }
+
+func (tree *Tree) Find(integer int) bool {
+	if integer == tree.Integer {
+		return true
+	}
+	if integer < tree.Integer && tree.Left != nil {
+		return tree.Left.Find(integer)
+	}
+	if integer > tree.Integer && tree.Right != nil {
+		return tree.Right.Find(integer)
+	}
+	return false
+}
