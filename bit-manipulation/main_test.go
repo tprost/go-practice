@@ -17,23 +17,25 @@ var tests = []Test{
 	{"10000000000", "10101", 3, 4, "10000001000"},
 }
 
-func TestBitSubbiness(t *testing.T) {
+func TestBitManipulation(t *testing.T) {
 	for _, test := range tests {
-		n, error := strconv.ParseUint(test.N, 2, 32)
+		nParsed, error := strconv.ParseUint(test.N, 2, 32)
 		if error != nil {
 			t.Error("could not parse input bit pattern")
 		}
-		m, error := strconv.ParseUint(test.M, 2, 32)
+		mParsed, error := strconv.ParseUint(test.M, 2, 32)
 		if error != nil {
 			t.Error("could not parse input bit pattern")
 		}
+		n := uint32(nParsed)
+		m := uint32(mParsed)
 		i := test.I
 		j := test.J
-		output, error := BitSubbiness(uint32(n), uint32(m), i, j)
+		error = BitManipulation(&n, &m, i, j)
 		if error != nil {
-			t.Error("BitSubbiness produced error")
+			t.Error("BitManipulation produced error")
 		}
-		outputString := strconv.FormatInt(int64(output), 2)
+		outputString := strconv.FormatInt(int64(n), 2)
 		if outputString != test.Output {
 			t.Error(outputString + " did not match expected " + test.Output)
 		}
