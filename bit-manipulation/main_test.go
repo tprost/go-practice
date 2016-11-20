@@ -1,4 +1,4 @@
-package bit_manipulation
+package bitmip
 
 import "testing"
 import "strconv"
@@ -39,5 +39,12 @@ func TestBitManipulation(t *testing.T) {
 		if outputString != test.Output {
 			t.Error(outputString + " did not match expected " + test.Output)
 		}
+	}
+}
+
+func TestRequiredBits(t *testing.T) {
+	output := RequiredBits(31, 14)
+	if output != 2 {
+		t.Error("RequiredBits should have output 2 but it gave", output) 
 	}
 }
